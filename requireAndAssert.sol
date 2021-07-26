@@ -15,7 +15,3 @@
 // invariants => a concept; condition that is always true at a particular point in the code
 // invariant example: when sending all funds; at the end of transaction balance should be = 0
 
-pragma solidity 0.7.5;
-    
-//reusing code from mapping and visibility
-    contract Bank_RequireExample{
