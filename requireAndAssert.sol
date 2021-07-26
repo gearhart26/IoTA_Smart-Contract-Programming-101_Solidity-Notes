@@ -53,7 +53,7 @@ pragma solidity 0.7.5;
             require(balance[msg.sender] >= amount, "Insufficent Balance");
             //not allowing user to send funds to themselves, and setting error message
             require(msg.sender != recipient, "You cannot send funds to yourself");
-           _transfer(msg.sender, recipient, amount);
+            _transfer(msg.sender, recipient, amount);
         }
     
         //private function to be called by function above
