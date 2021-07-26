@@ -30,4 +30,21 @@ contract StructExample{
 }
 
 
+contract MappingBalanceToAddressExample{
+    
+    //this mapping ties an usigned integer variable "balance" to the key "address" 
+    //so given an adress it will instantly return that balance without having to search for it like you would have to in an array
+    mapping(address => uint) balance;
+    //changing state varable balance (so not pure or view) and returning new balance
+    function addBalance(uint _balanceToAdd) public returns(uint){
+        //takes the address of the sender as input and returns their value plus value being added to balance
+        balance[msg.sender] += _balanceToAdd;    //longer way to write same thing=> balance[msg.sender] = balance[msg.sender] + _balanceToAdd;
+        return balance[msg.sender];
+    }
+    //returns user balance associated with their address
+    function getBalance() public view returns (uint){
+        return balance[msg.sender];
+    }
+}
+
 
