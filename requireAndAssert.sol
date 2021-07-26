@@ -15,3 +15,20 @@
 // invariants => a concept; condition that is always true at a particular point in the code
 // invariant example: when sending all funds; at the end of transaction balance should be = 0
 
+pragma solidity 0.7.5;
+    
+//reusing code from mapping and visibility
+    contract Bank_RequireExample{
+    
+        //this mapping ties "balance" to the key "address" 
+        mapping(address => uint) balance;
+
+//new code here
+        //creates variable owner for adress to be used in require(), like administrator priviliges 
+        address owner;
+        
+        //sets owners adress to the address that deployed the smart contract for require()
+        constructor(){
+            owner = msg.sender;
+        }
+        
