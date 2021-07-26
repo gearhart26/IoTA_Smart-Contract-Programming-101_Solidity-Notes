@@ -1,4 +1,3 @@
-
 // ERROR HANDELING  //
 
 // require() = checks for valid conditions, checks inputs, revert to undo unathorized actions
