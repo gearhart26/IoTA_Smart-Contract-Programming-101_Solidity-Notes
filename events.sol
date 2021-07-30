@@ -18,3 +18,41 @@ pragma solidity 0.7.5;
         //i think this is the concept that allows etherscan to track wallet balances
         //event balanceAdded (uint amount, indexed address depositedTo);
         //event balanceTransfered (uint amount, indexed address transferedTo);
+                
+        modifier onlyOwner{
+            require(msg.sender == owner);
+            _;
+        }
+        
+        constructor(){
+            owner = msg.sender;
+        }
+        
+//new code
+        //adding emit to trigger balanceAdded event defined above
+        function addBalance(uint _ToAdd) public onlyOwner returns(uint){
+            balance[msg.sender] += _ToAdd; 
+            emit balanceAdded(_ToAdd, msg.sender);
+            return balance[msg.sender];
+        }
+        
+        function getBalance() public view returns (uint){
+            return balance[msg.sender];
+        }
+        
+        function transfer(address recipient, uint amount) public {
+            require(balance[msg.sender] >= amount, "Insufficent Balance");
+            require(msg.sender != recipient, "You cannot send funds to yourself");
+            uint previousSenderBalance = balance[msg.sender];
+            _transfer(msg.sender, recipient, amount);
+            assert(balance[msg.sender] == previousSenderBalance - amount);
+        }
+        
+//new code
+        //adding emit to trigger balanceTransfered event defined above
+        function _transfer(address from, address to, uint amount) private {
+            balance[from] -= amount;
+            balance[to] += amount;
+            emit balanceTransfered(amount, to);
+        }
+    }
