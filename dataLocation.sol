@@ -25,7 +25,7 @@ contract DataLocationExample{
         //this would normally allow you to change text2 if it was in memory but it is in calldata which is read only so it would not work here
         // text2 = "hello";
         
-        return text;
+        return text2;
         
     }
     
