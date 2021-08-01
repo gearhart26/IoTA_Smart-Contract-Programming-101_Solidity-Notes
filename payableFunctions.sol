@@ -21,7 +21,7 @@ pragma solidity 0.7.5;
         }
         
         constructor(){
-            owner = msg.sender
+            owner = msg.sender;
         }
         
 //New code here; changing the addBalance function
