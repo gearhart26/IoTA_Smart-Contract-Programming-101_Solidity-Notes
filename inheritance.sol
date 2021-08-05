@@ -10,3 +10,5 @@ import "./ownable_Inheritance.sol";
 
 //reusing code from PayableFunctions. This will act as the child contract 
     contract Bank_InheritanceExample is Ownable{
+    
+    }
