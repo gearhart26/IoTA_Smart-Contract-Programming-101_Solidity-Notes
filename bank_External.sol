@@ -33,4 +33,39 @@ pragma solidity 0.7.5;
         
         event balanceTransfered (address transferedFrom, uint amount, address transferedTo);
         
-      }
+        function deposit() public payable returns (uint) {
+            balance[msg.sender] += msg.value; 
+            emit depositDone(msg.value, msg.sender);
+            return balance[msg.sender];
+        }
+        
+        function withdraw(uint amount) public returns (uint) {
+            require(balance[msg.sender] >= amount, "Insufficent Balance");
+            balance[msg.sender] -= amount;
+            msg.sender.transfer(amount);
+            return balance[msg.sender];
+       }
+        
+        function getBalance() public view returns (uint){
+            return balance[msg.sender];
+        }
+        
+        function transfer(address recipient, uint amount) public {
+            require(balance[msg.sender] >= amount, "Insufficent Balance");
+            require(msg.sender != recipient, "You cannot send funds to yourself");
+            uint previousSenderBalance = balance[msg.sender];
+            _transfer(msg.sender, recipient, amount);
+            
+//New Code Here
+                //this will make it so that when someone makes a transfer we are going to make a call to the governmentInstance.addTransaction() function to log the transaction in our government contracts transactionLog
+            governmentInstance.addTransaction(msg.sender, recipient, amount);
+            
+            assert(balance[msg.sender] == previousSenderBalance - amount);
+            emit balanceTransfered(msg.sender, amount, recipient);
+        }
+        
+        function _transfer(address from, address to, uint amount) private {
+            balance[from] -= amount;
+            balance[to] += amount;
+        }
+    }
